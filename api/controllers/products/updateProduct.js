@@ -6,6 +6,7 @@ const {
   GENERIC_ERROR,
   NOT_FOUND,
   BAD_REQUEST,
+  UNAUTHORIZED,
 } = require('../../util/error');
 
 const Product = mongoose.model('Product');

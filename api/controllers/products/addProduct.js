@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 
 const { handleResponse, CREATED } = require('../../util/success');
-const { createError, GENERIC_ERROR, NOT_FOUND } = require('../../util/error');
+const {
+  createError,
+  GENERIC_ERROR,
+  NOT_FOUND,
+  UNAUTHORIZED,
+} = require('../../util/error');
 
 const Category = mongoose.model('Category');
 const Product = mongoose.model('Product');
