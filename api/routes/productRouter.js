@@ -23,6 +23,10 @@ productRouter
   .route('/products/carts')
   .post(auth.verifyToken, validateCart, cartController.addProductToCart);
 
+productRouter
+  .route('/products/carts/:id')
+  .delete(auth.verifyToken, cartController.deleteProductFromCart);
+
 // productRouter
 //   .route('/products/carts/update')
 //   .patch(auth.verifyToken, validateCart, cartController.updateCart);
