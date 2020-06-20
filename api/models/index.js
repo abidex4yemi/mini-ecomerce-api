@@ -4,10 +4,12 @@ const { mongoURI, dbName } = require('../config/keys');
 const userSchema = require('./user');
 const categorySchema = require('./Category');
 const productSchema = require('./Product');
+const cartSchema = require('./Cart');
 
 mongoose.model('User', userSchema);
 mongoose.model('Category', categorySchema);
 mongoose.model('Product', productSchema);
+mongoose.model('Cart', cartSchema);
 
 const connectDB = (mongoUri, dbName) => {
   const mongooseOpts = {

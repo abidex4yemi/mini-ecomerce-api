@@ -32,6 +32,8 @@ class Auth {
    * @param {*} next
    */
   async verifyToken(req, res, next) {
+    req.user = null;
+
     const token = req.get('Authorization');
 
     // check if token is provided
@@ -63,7 +65,7 @@ class Auth {
       }
 
       // makes user object available through request object
-      req.user = decoded;
+      req.user = user;
 
       return next();
     } catch (errors) {
