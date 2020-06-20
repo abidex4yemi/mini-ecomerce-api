@@ -14,6 +14,7 @@ productRouter
 productRouter
   .route('/products/:id')
   .get(productController.getSingleProduct)
-  .delete(auth.verifyToken, productController.deleteProduct);
+  .delete(auth.verifyToken, productController.deleteProduct)
+  .patch(auth.verifyToken, productController.updateProduct);
 
 module.exports = productRouter;

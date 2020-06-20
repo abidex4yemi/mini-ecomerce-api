@@ -1,18 +1,23 @@
 const mongoose = require('mongoose');
 
 const { handleResponse, OK } = require('../../util/success');
-const { createError, GENERIC_ERROR, NOT_FOUND } = require('../../util/error');
+const {
+  createError,
+  GENERIC_ERROR,
+  NOT_FOUND,
+  BAD_REQUEST,
+} = require('../../util/error');
 
 const Product = mongoose.model('Product');
 
 /**
- * @description Delete a single product given the id is valid
+ * @description Update a single product
  *
  * @param {*} req
  * @param {*} res
  * @param {*} next
  */
-const deleteProduct = async (req, res, next) => {
+const updateProduct = async (req, res, next) => {
   if (!req.user) {
     return next(
       createError({
@@ -23,23 +28,30 @@ const deleteProduct = async (req, res, next) => {
   }
 
   try {
-    const productId = req.params.id;
+    const anyFieldIsEmpty = Object.values(req.body).some(
+      (value) => value === null || value.trim() === ''
+    );
 
-    const product = await Product.findByIdAndDelete(productId);
-
-    if (!product) {
+    if (anyFieldIsEmpty) {
       return next(
         createError({
-          status: NOT_FOUND,
-          message: 'Please provide a valid product ID',
+          status: BAD_REQUEST,
+          message: 'Request body cant be empty and key and value must exist',
         })
       );
     }
 
+    const productId = req.params.id;
+
+    const updatedProduct = await Product.findOneAndUpdate(
+      { _id: productId },
+      req.body,
+      { new: true }
+    );
+
     return res.status(OK).json(
       handleResponse({
-        data: product,
-        message: 'Product deleted successfully',
+        data: updatedProduct,
       })
     );
   } catch (error) {
@@ -47,7 +59,7 @@ const deleteProduct = async (req, res, next) => {
       return next(
         createError({
           status: NOT_FOUND,
-          message: 'Please provide a valid product ID',
+          message: 'Product with the specified ID not found',
         })
       );
     }
@@ -61,4 +73,4 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
-module.exports = deleteProduct;
+module.exports = updateProduct;
