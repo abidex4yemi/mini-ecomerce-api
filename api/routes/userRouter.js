@@ -1,6 +1,6 @@
 const express = require('express');
 
-const userController = require('../controllers/user');
+const userController = require('../controllers/users');
 const validateSignupData = require('../middleware/validateSignupData');
 const validateLoginCredential = require('../middleware/validateLoginData');
 

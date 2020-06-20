@@ -11,6 +11,8 @@ const { NOT_FOUND } = require('./util/error');
 const customErrorHandler = require('./middleware/customErrorHandler');
 const { handleResponse, OK } = require('./util/success');
 const userRouter = require('./routes/userRouter');
+const productRouter = require('./routes/productRouter');
+const categoryRouter = require('./routes/categoryRouter');
 
 const app = express();
 
@@ -31,12 +33,21 @@ app.get('/', (req, res) => {
   res.status(OK).json(
     handleResponse({
       message: 'Welcome to API root...',
-      data: [],
+      data: {
+        login_url: '/api/v1/auth/login',
+        sign_up_url: '/api/v1/auth/signup',
+        products_url: {
+          add_product: '/api/v1/products',
+        },
+        categories_url: {
+          add_category: '/api/v1/categories',
+        },
+      },
     })
   );
 });
 
-app.use('/api/v1', userRouter);
+app.use('/api/v1', [userRouter, productRouter, categoryRouter]);
 
 // Handle invalid request
 app.all('*', (req, res) => {
