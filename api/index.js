@@ -6,9 +6,11 @@ const logger = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 
+require('./models');
 const { NOT_FOUND } = require('./util/error');
 const customErrorHandler = require('./middleware/customErrorHandler');
-const { handleSuccessResponse, OK } = require('./util/success');
+const { handleResponse, OK } = require('./util/success');
+const userRouter = require('./routes/userRouter');
 
 const app = express();
 
@@ -25,23 +27,25 @@ app.use(cors());
 app.use(logger('dev'));
 app.use(helmet());
 
-app.get('/', (req, res) =>
+app.get('/', (req, res) => {
   res.status(OK).json(
-    handleSuccessResponse({
+    handleResponse({
       message: 'Welcome to API root...',
       data: [],
     })
-  )
-);
+  );
+});
+
+app.use('/api/v1', userRouter);
 
 // Handle invalid request
-app.all('*', (req, res) =>
+app.all('*', (req, res) => {
   res.status(NOT_FOUND).json({
     success: false,
     message: 'Route does not exist...',
     body: [],
-  })
-);
+  });
+});
 
 // handle all application level error
 // eslint-disable-next-line max-len
