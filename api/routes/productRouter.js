@@ -11,4 +11,6 @@ productRouter
   .post(auth.verifyToken, validateProductData, productController.addProduct)
   .get(productController.getProducts);
 
+productRouter.route('/products/:id').get(productController.getSingleProduct);
+
 module.exports = productRouter;

@@ -20,7 +20,8 @@ const getProducts = async (req, res, next) => {
     // Get product on demand | limiting the product to 8 per page
     const products = await Product.find()
       .skip(resultPerPage * page - resultPerPage)
-      .limit(resultPerPage);
+      .limit(resultPerPage)
+      .populate('category');
 
     // return total number of products in store
     const totalNumberOfProduct = await Product.countDocuments();
