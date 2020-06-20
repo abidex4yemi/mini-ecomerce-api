@@ -8,6 +8,7 @@ const productRouter = express.Router();
 
 productRouter
   .route('/products')
-  .post(auth.verifyToken, validateProductData, productController.addProduct);
+  .post(auth.verifyToken, validateProductData, productController.addProduct)
+  .get(productController.getProducts);
 
 module.exports = productRouter;
