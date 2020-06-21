@@ -6,6 +6,7 @@ const {
   GENERIC_ERROR,
   NOT_FOUND,
   UNAUTHORIZED,
+  OK,
 } = require('../../util/error');
 
 const Cart = mongoose.model('Cart');
@@ -35,23 +36,30 @@ const addProductToCart = async (req, res, next) => {
   // would be a great way to email their cart within a specified expiry date
 
   try {
-    // Move to next method inline which is a controller for PATCH request
-    // why? if no cart exist is a post request
-    // else is a PATCH request
-
     const userHasItemInCart = await Cart.find({ user: req.user._id }).populate(
       'items'
     );
 
-    if (userHasItemInCart.length > 0) {
-      // update cart
-      // TODO
-      return res.json({ message: 'Todo: update cart' });
-    }
-
     const { items } = req.body;
     const user = req.user;
 
+    // update cart
+    if (userHasItemInCart.length > 0) {
+      const updatedCart = await Cart.findOneAndUpdate(
+        { user: user._id },
+        { $addToSet: { items } },
+        { new: true }
+      );
+
+      return res.json(
+        handleResponse({
+          message: 'cart updated successfully',
+          data: updatedCart,
+        })
+      );
+    }
+
+    // create new product to cart
     const newCart = await Cart.create({
       user,
       items,
