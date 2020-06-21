@@ -27,8 +27,4 @@ productRouter
   .route('/products/carts/:id')
   .delete(auth.verifyToken, cartController.deleteProductFromCart);
 
-// productRouter
-//   .route('/products/carts/update')
-//   .patch(auth.verifyToken, validateCart, cartController.updateCart);
-
 module.exports = productRouter;
