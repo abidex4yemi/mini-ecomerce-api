@@ -14,6 +14,7 @@
 - Setup `.env => checkout sample (.env.example) in the codebase` for environment variable
 - Run `npm install` to install all dependencies
 - Type `npm run watch` to get the development server running
+- The application runs on `http://localhost:2020` by default
 
 ### Authentication
 
