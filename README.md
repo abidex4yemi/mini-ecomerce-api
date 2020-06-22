@@ -25,7 +25,9 @@
   {
     "name": "21Attire Wine Bodycon Amd Ruffle Jacket Dress",
     "description": "The most fashionable,yet affordable bodycon ",
-    "category": "",
+    "category": {
+        "id": ""
+    },
     "attributes": [{
       "price": 0,
       "imageUrl": "",

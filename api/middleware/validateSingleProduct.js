@@ -19,7 +19,7 @@ const productSchema = Joi.object().keys({
           imageUrl: Joi.string(),
           sizes: Joi.array().items(Joi.string().required()).required(),
           color: Joi.string(),
-          rating: Joi.number().min(0).required(),
+          rating: Joi.number().min(0),
         })
         .required()
     )
