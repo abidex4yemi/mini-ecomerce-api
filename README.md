@@ -14,6 +14,7 @@
 - Setup `.env => checkout sample (.env.example) in the codebase` for environment variable
 - Run `npm install` to install all dependencies
 - Type `npm run watch` to get the development server running
+- The application runs on `http://localhost:2020` by default
 
 ### Authentication
 
@@ -25,7 +26,9 @@
   {
     "name": "21Attire Wine Bodycon Amd Ruffle Jacket Dress",
     "description": "The most fashionable,yet affordable bodycon ",
-    "category": "",
+    "category": {
+        "id": ""
+    },
     "attributes": [{
       "price": 0,
       "imageUrl": "",
